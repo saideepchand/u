@@ -5,20 +5,28 @@ pipeline {
         stage('build'){ 
            steps{
               
-                    bat 'mvn clean install'
+                    bat 'mvn clean '
                     }
                 }
             
        
-        stage('Deployment stage'){ 
+        stage('pack'){ 
         steps{
         
-        bat 'mvn package deploy -DmuleDeploy'
+        bat 'mvn package'
             
                 }
                    
             }
             
+            stage('testing'){ 
+        steps{
+        
+        bat 'mvn test'
+            
+                }
+                   
+            }
             
              
                 
