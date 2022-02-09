@@ -27,4 +27,16 @@ payload]]></ee:set-payload>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="15b69615-41fb-452f-9cdf-c46568fd173c" />
 	</flow>
+	<flow name="post" doc:id="fa90297a-4bfa-44d7-9812-370947e43e3d" >
+		<http:listener doc:name="Listener" doc:id="22f61de3-1e8b-4643-92c0-2501471c58d2" config-ref="HTTP_Listener_config" path="/post"/>
+		<db:insert doc:name="Insert" doc:id="2557f85b-6528-4d8e-8a38-7d35d02680b2" config-ref="Database_Config">
+			<db:sql ><![CDATA[insert into EMP values(:id,:name,:salary)]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	'id': attributes.queryParams.id,
+	'name': attributes.queryParams.name,
+	'salary': attributes.queryParams.salary
+}]]]></db:input-parameters>
+		</db:insert>
+		<set-payload value="done" doc:name="Set Payload" doc:id="73fb1219-88aa-4331-8c29-506e6953bbc8" />
+	</flow>
 </mule>
